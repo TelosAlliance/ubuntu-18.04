@@ -65,6 +65,7 @@ RUN dpkg --add-architecture i386 \
     libboost-program-options-dev:i386 \
     libc6-dev \
     libcurl4 \
+    libcurl4-openssl-dev \
     libsndfile1-dev \
     libssl-dev \
     libtool \
