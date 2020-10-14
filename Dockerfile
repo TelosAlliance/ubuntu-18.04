@@ -1,6 +1,14 @@
 # vim:syntax=dockerfile
 FROM ubuntu:18.04
 
+# Set this before `apt-get` so that it can be done non-interactively
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ America/New_York
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+ENV GOROOT /usr/local/go
+ENV PATH $GOROOT/bin:$PATH
+
 # KEEP PACKAGES SORTED ALPHABETICALY
 # Do everything in one RUN command
 RUN dpkg --add-architecture i386 \
@@ -30,6 +38,11 @@ RUN dpkg --add-architecture i386 \
     nodejs \
   # Install other javascript package managers
   && npm install -g yarn pnpm \
+  # Install newer version of Go than is included with Ubuntu
+  && wget -c https://dl.google.com/go/go1.14.9.linux-amd64.tar.gz \
+  && tar xvf go1.14.9.linux-amd64.tar.gz \
+  && mv go /usr/local/ \
+  && rm -f go* \
   # Install everything else
   && apt-get install -y \
     autoconf \
@@ -53,7 +66,6 @@ RUN dpkg --add-architecture i386 \
     gdb \
     gettext \
     git \
-    golang \
     gosu \
     gzip \
     kmod \
