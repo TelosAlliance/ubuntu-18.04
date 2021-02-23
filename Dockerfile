@@ -52,6 +52,7 @@ RUN dpkg --add-architecture i386 \
     bzip2 \
     cmake \
     cpio \
+    cppcheck \
     coreutils \
     default-jdk \
     device-tree-compiler \
