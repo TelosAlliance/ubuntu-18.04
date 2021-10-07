@@ -64,6 +64,7 @@ rm -rf "$RUST_HOME/registry" "$RUST_HOME/git"
 chmod 777 "$RUST_HOME"
 apt-get install -y musl-tools
 # Install everything else
+# NOTE: Can't install libboost-all-dev:i386 because it conflicts with libboost-all-dev
 apt-get install -y \
   autoconf \
   automake \
@@ -93,7 +94,6 @@ apt-get install -y \
   libasound2-dev \
   libavahi-compat-libdnssd-dev \
   libboost-all-dev \
-  # Can't install libboost-all-dev:i386 because it conflicts with libboost-all-dev
   libboost-dev:i386 \
   libboost-program-options-dev:i386 \
   libc6-dev \
