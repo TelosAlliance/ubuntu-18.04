@@ -3,11 +3,13 @@
 This container is based on Ubuntu 18.04, but contains many additional packages for software development, some of which are not part of the official repositories.
 It is intended to serve as build environment for many of our projects.
 
+DockerHub link: https://hub.docker.com/r/telosalliance/ubuntu-18.04
+
 ## Tools
 
 - Version Control: `git`, `svn`
 - Build Systems: `autotools`, `cmake`, `make`, `scons`
-- Compilers: `g++-multilib`, `gcc-multilib`, `java`, `golang`
+- Compilers: `g++-multilib`, `gcc-multilib`, `java`, `golang`, `rustc`
 - Scripting Languages: `nodejs`/`npm`/`yarn`/`pnmp`, `perl`, `python2`, `python3`
 - Debug / Analysis: `gdb`, `shellcheck`, `valgrind`
 
@@ -41,26 +43,10 @@ tags:
  - docker
 ```
 
-### As a Shell Script
+### From a Shell Script
 
-This shell script will launch the container and execute shell or any other command from inside:
-
-```bash
-#!/bin/sh
-# Usage: run-docker [cmd [arg0 [arg1 ...]]]
-# Run any command inside our CI container
-
-# NOTE: Requires $PWD to be under $HOME
-
-docker run -it \
-    --env LINUX_USER="$(id -un)" \
-    --env LINUX_UID="$(id -u)" \
-    --env LINUX_GROUP="$(id -gn)" \
-    --env LINUX_GID="$(id -g)" \
-    --env LINUX_DIR="$PWD" \
-    --mount "src=$HOME,target=$HOME,type=bind" \
-    telosalliance/ubuntu-18.04:latest "$@"
-```
+Using the `run-docker` shell script provided in this repository, you can use start the container using your existing username, group, and home directory.
+The script can be used to run a single command inside the container or start an interactive shell.
 
 ### From Makefiles
 
