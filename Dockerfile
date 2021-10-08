@@ -23,12 +23,14 @@ ENV PATH $GOPATH/bin:$GOROOT/bin:$RUST_HOME/bin:$PATH
 
 # KEEP PACKAGES SORTED ALPHABETICALY
 # Do everything in one RUN command
-RUN <<EOF
+RUN /bin/bash <<EOF
+set -euxo pipefail
 dpkg --add-architecture i386
 # Install packages needed to set up third-party repositories
 apt-get update
-apt-get install -y \
+apt-get install -y --no-install-recommends \
   apt-transport-https \
+  build-essential \
   ca-certificates \
   curl \
   gnupg \
@@ -39,7 +41,7 @@ apt-get install -y \
 # Install AWS cli
 pip3 install awscli
 # Use kitware's CMake repository for up-to-date version
-curl -sSf - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
+curl -sSf https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
 apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
 # Use NodeSource's NodeJS 12.x repository
 curl -sSf https://deb.nodesource.com/setup_12.x | bash -
@@ -47,7 +49,7 @@ curl -sSf https://deb.nodesource.com/setup_12.x | bash -
 curl -sSf https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 # Install nodejs/npm
 apt-get update
-apt-get install -y \
+apt-get install -y --no-install-recommends \
   nodejs
 # Install other javascript package managers
 npm install -g yarn pnpm
@@ -56,7 +58,7 @@ curl -sSf https://dl.google.com/go/go1.14.9.linux-amd64.tar.gz | tar -xz -C "$GO
 # Install Rust, with MUSL libc toolchain
 curl -sSf https://sh.rustup.rs | sh -s -- -y
 curl -sSf https://just.systems/install.sh | bash -s -- --to "$RUST_HOME/bin"
-cargo install cargo-bundle-license
+cargo install cargo-bundle-licenses
 cargo install cargo-deny
 cargo install cargo-license
 rustup target install x86_64-unknown-linux-musl
@@ -65,7 +67,7 @@ chmod 777 "$RUST_HOME"
 apt-get install -y musl-tools
 # Install everything else
 # NOTE: Can't install libboost-all-dev:i386 because it conflicts with libboost-all-dev
-apt-get install -y \
+apt-get install -y --no-install-recommends \
   autoconf \
   automake \
   bc \
@@ -83,7 +85,6 @@ apt-get install -y \
   g++ \
   g++-multilib \
   gawk \
-  gcc \
   gcc-multilib \
   gdb \
   gettext \
