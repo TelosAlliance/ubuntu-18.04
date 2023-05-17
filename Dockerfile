@@ -91,6 +91,7 @@ apt-get install -y --no-install-recommends \
   git \
   gosu \
   gzip \
+  jq \
   kmod \
   libasound2-dev \
   libavahi-compat-libdnssd-dev \
@@ -109,6 +110,7 @@ apt-get install -y --no-install-recommends \
   lzop \
   make \
   ncurses-dev \
+  openssh-client \
   patch \
   perl \
   python \
