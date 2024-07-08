@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3-labs
 # vim:syntax=dockerfile
-FROM --platform=$BUILDPLATFORM ubuntu:bionic
+FROM --platform=$BUILDPLATFORM ubuntu:bionic-20230530
 
 # Set this before `apt-get` so that it can be done non-interactively
 ENV DEBIAN_FRONTEND noninteractive
