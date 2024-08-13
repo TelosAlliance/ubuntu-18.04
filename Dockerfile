@@ -90,6 +90,7 @@ apt-get install -y --no-install-recommends \
   g++ \
   gawk \
   gcc \
+  gcovr \
   gdb \
   gettext \
   git \
