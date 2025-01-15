@@ -103,6 +103,7 @@ apt-get install -y --no-install-recommends \
   libc6-dev \
   libcurl4 \
   libcurl4-openssl-dev \
+  libpcap-dev \
   libsndfile1-dev \
   libssl-dev \
   libtool \
