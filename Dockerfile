@@ -167,7 +167,9 @@ case "$TARGETPLATFORM" in
           libdbus-1-dev:i386 \
           libavahi-client-dev:i386 \
           libavahi-common-dev:i386 \
-          libavahi-compat-libdnssd-dev:i386
+          libavahi-compat-libdnssd-dev:i386 \
+          libssl-dev:i386 \
+          libcurl4-openssl-dev:i386
         # Install Rust MUSL libc toolchain
         rustup target install x86_64-unknown-linux-musl
         ;;
