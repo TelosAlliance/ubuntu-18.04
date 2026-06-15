@@ -102,6 +102,7 @@ apt-get install -y --no-install-recommends \
   libavahi-compat-libdnssd-dev \
   libbison-dev \
   libboost-all-dev \
+  libboost-regex-dev \
   libc6-dev \
   libcurl4 \
   libcurl4-openssl-dev \
