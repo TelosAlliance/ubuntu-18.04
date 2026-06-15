@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3-labs
 # vim:syntax=dockerfile
-FROM --platform=$BUILDPLATFORM ubuntu:bionic
+FROM --platform=$BUILDPLATFORM ubuntu:bionic-20230530
 
 # Set this before `apt-get` so that it can be done non-interactively
 ENV DEBIAN_FRONTEND noninteractive
@@ -90,6 +90,7 @@ apt-get install -y --no-install-recommends \
   g++ \
   gawk \
   gcc \
+  gcovr \
   gdb \
   gettext \
   git \
@@ -99,6 +100,7 @@ apt-get install -y --no-install-recommends \
   kmod \
   libasound2-dev \
   libavahi-compat-libdnssd-dev \
+  libbison-dev \
   libboost-all-dev \
   libc6-dev \
   libcurl4 \
