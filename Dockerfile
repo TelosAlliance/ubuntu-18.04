@@ -105,6 +105,7 @@ apt-get install -y --no-install-recommends \
   libc6-dev \
   libcurl4 \
   libcurl4-openssl-dev \
+  libpcap-dev \
   libsndfile1-dev \
   libssl-dev \
   libtool \
@@ -133,36 +134,49 @@ apt-get install -y --no-install-recommends \
   vim \
   zip \
   zlib1g-dev
-
+# Set up Rust environment
+curl -sSf https://sh.rustup.rs | sh -s -- -y
+curl -sSf https://just.systems/install.sh | bash -s -- --to "$RUST_HOME/bin"
+cargo install cargo-bundle-licenses
+cargo install cargo-deny
+cargo install cargo-license
 case "$TARGETPLATFORM" in
     "linux/amd64")
         #echo "export RUST_TARGET=x86_64-unknown-linux-musl" >> evars
-        #dpkg --add-architecture i386
-        #apt-get update
-        #apt-get upgrade
-        #echo "installing i386 components.."
-        #apt-get install -y --no-install-recommends \
-        #  libboost-dev:i386 \
-        #  libboost-program-options-dev:i386 \
-        #  zlib1g-dev:i386
-        # Install Rust, with MUSL libc toolchain
-        curl -sSf https://sh.rustup.rs | sh -s -- -y
-        curl -sSf https://just.systems/install.sh | bash -s -- --to "$RUST_HOME/bin"
-        cargo install cargo-bundle-licenses
-        cargo install cargo-deny
-        cargo install cargo-license
+        dpkg --add-architecture i386
+        apt-get update
+        apt-get -y upgrade
+        echo "installing i386 components.."
+        apt-get install -y --no-install-recommends \
+          libboost-dev:i386 \
+          libboost-program-options-dev:i386 \
+          zlib1g-dev:i386 \
+          gcc-multilib \
+          g++-multilib \
+          libc6-dev:i386 \
+          libstdc++-7-dev:i386 \
+          libboost-random-dev:i386 \
+          libboost-system-dev:i386 \
+          libboost-thread-dev:i386 \
+          libboost-filesystem-dev:i386 \
+          libboost-chrono-dev:i386 \
+          libboost-atomic-dev:i386 \
+          libboost-date-time-dev:i386 \
+          libboost-program-options1.65.1:i386 \
+          libicu-dev:i386 \
+          libboost-regex1.65-dev:i386 \
+          libboost-regex-dev:i386 \
+          libdbus-1-dev:i386 \
+          libavahi-client-dev:i386 \
+          libavahi-common-dev:i386 \
+          libavahi-compat-libdnssd-dev:i386 \
+          libssl-dev:i386 \
+          libcurl4-openssl-dev:i386
+        # Install Rust MUSL libc toolchain
         rustup target install x86_64-unknown-linux-musl
-        rm -rf "$RUST_HOME/registry" "$RUST_HOME/git"
-        chmod 777 "$RUST_HOME"
-        apt-get install -y musl-tools
         ;;
     "linux/arm64")
         # Install Rust, with MUSL libc toolchain
-        curl -sSf https://sh.rustup.rs | sh -s -- -y
-        curl -sSf https://just.systems/install.sh | bash -s -- --to "$RUST_HOME/bin"
-        cargo install cargo-bundle-licenses
-        cargo install cargo-deny
-        cargo install cargo-license
         rustup target install aarch64-unknown-linux-musl
         rm -rf "$RUST_HOME/registry" "$RUST_HOME/git"
         chmod 777 "$RUST_HOME"
@@ -174,6 +188,9 @@ case "$TARGETPLATFORM" in
         exit 1
         ;;
 esac
+rm -rf "$RUST_HOME/registry" "$RUST_HOME/git"
+chmod 777 "$RUST_HOME"
+apt-get install -y musl-tools
 
 apt-get clean
 rm -rf /var/lib/apt/lists/*
