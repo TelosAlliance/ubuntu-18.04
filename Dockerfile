@@ -144,6 +144,8 @@ cargo install cargo-license
 case "$TARGETPLATFORM" in
     "linux/amd64")
         #echo "export RUST_TARGET=x86_64-unknown-linux-musl" >> evars
+        apt-get install -y --no-install-recommends \
+          libboost-regex-dev:amd64
         dpkg --add-architecture i386
         apt-get update
         apt-get -y upgrade
