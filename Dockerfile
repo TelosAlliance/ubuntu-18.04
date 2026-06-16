@@ -144,8 +144,6 @@ cargo install cargo-license
 case "$TARGETPLATFORM" in
     "linux/amd64")
         #echo "export RUST_TARGET=x86_64-unknown-linux-musl" >> evars
-        apt-get install -y --no-install-recommends \
-          libboost-regex-dev:amd64
         dpkg --add-architecture i386
         apt-get update
         apt-get -y upgrade
@@ -175,6 +173,8 @@ case "$TARGETPLATFORM" in
           libavahi-compat-libdnssd-dev:i386 \
           libssl-dev:i386 \
           libcurl4-openssl-dev:i386
+        ln -sf /usr/lib/x86_64-linux-gnu/libboost_regex.so.1.65.1 \
+               /usr/lib/x86_64-linux-gnu/libboost_regex.so
         # Install Rust MUSL libc toolchain
         rustup target install x86_64-unknown-linux-musl
         ;;
